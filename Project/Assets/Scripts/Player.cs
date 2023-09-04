@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     Inventory myInventory;
     public float speed;
+    public float speedDecreasePerArrow;
     AudioSource audio;
     public AudioClip walk;
     public AudioClip pickup;
@@ -115,7 +116,7 @@ public class Player : MonoBehaviour
                 audio.PlayOneShot(pickup);
                 pickupScript.OnPickup();
                 myInventory.AddItemToSlot(collider.gameObject, pickupScript.Image);
-                speed -= .005f;
+                speed -= speedDecreasePerArrow;
             }
             else if (myInventory.currentWeapon == null && (script.name == "Bow" || script.name != "Sword" || script.name != "Gun") && script.name != "Arrow")
             {
@@ -132,7 +133,7 @@ public class Player : MonoBehaviour
         {
             audio.PlayOneShot(drop_two);
             myInventory.RemoveItemFromSlot(transform, true);
-            speed += .005f;
+            speed += speedDecreasePerArrow;
         }
         if (Input.GetButtonDown("Fire2") && myInventory.currentWeapon != null)
         {
@@ -157,7 +158,7 @@ public class Player : MonoBehaviour
                         case 1: audio.PlayOneShot(arrowshoot); break;
                         case 2: audio.PlayOneShot(arrowshoot_three); break;
                     }
-                    speed += .01f;
+                    speed += speedDecreasePerArrow;
                     myInventory.ShootBow();
                 }
             }
@@ -171,7 +172,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.Translate(-speed, 0, 0);
+            transform.Translate(-speed * Time.deltaTime, 0, 0);
             if (timer >= timeTilStepSound)
             {
                 audio.PlayOneShot(walk);
@@ -184,7 +185,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            transform.Translate(speed, 0, 0);
+            transform.Translate(speed * Time.deltaTime, 0, 0);
             if (timer >= timeTilStepSound)
             {
                 audio.PlayOneShot(walk);
@@ -197,7 +198,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
-            transform.Translate(0, speed, 0);
+            transform.Translate(0, speed * Time.deltaTime, 0);
             if (timer >= timeTilStepSound)
             {
                 audio.PlayOneShot(walk);
@@ -210,7 +211,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
-            transform.Translate(0, -speed, 0);
+            transform.Translate(0, -speed * Time.deltaTime, 0);
             if (timer >= timeTilStepSound)
             {
                 audio.PlayOneShot(walk);

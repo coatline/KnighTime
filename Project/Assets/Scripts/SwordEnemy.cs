@@ -58,8 +58,7 @@ public class SwordEnemy : MonoBehaviour
 
     void Attack()
     {
-
-        transform.position = Vector3.Lerp(transform.position, player.transform.position, Random.Range(.013f, .02f));
+        transform.position = Vector3.Lerp(transform.position, player.transform.position, Random.Range(1.5f, 2f) * Time.deltaTime);
 
         timer += Time.deltaTime;
 
